@@ -1,0 +1,42 @@
+<odoo>
+  <menuitem id="menu_open_academy_root" name="Open Academy" sequence="10"/>
+
+  <record id="action_open_academy_session" model="ir.actions.act_window">
+    <field name="name">Sessions</field>
+    <field name="res_model">open.academy.session</field>
+    <field name="view_mode">list,form</field> <!-- list au lieu de tree -->
+  </record>
+
+  <menuitem id="menu_open_academy_session" name="Sessions"
+            parent="menu_open_academy_root" action="action_open_academy_session"/>
+
+  <record id="view_open_academy_session_list" model="ir.ui.view">
+    <field name="name">open.academy.session.list</field>
+    <field name="model">open.academy.session</field>
+    <field name="arch" type="xml">
+      <list> <!-- list au lieu de tree -->
+        <field name="course_id"/>
+        <field name="date_start"/>
+        <field name="attendee_ids"/>
+      </list>
+    </field>
+  </record>
+
+  <record id="view_open_academy_session_form" model="ir.ui.view">
+    <field name="name">open.academy.session.form</field>
+    <field name="model">open.academy.session</field>
+    <field name="arch" type="xml">
+      <form string="Session">
+        <sheet>
+          <group>
+            <field name="course_id" required="1"/>
+            <field name="date_start"/>
+          </group>
+          <group>
+            <field name="attendee_ids" widget="many2many_tags"/>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+</odoo>

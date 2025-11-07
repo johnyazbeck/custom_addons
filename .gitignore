@@ -1,0 +1,16 @@
+odoo/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.env
+.venv/
+.vscode/
+.idea/
+*.log
+.odoo_server.log
+.pytest_cache/
+.coverage
+htmlcov/
+filestore/
+sessions/

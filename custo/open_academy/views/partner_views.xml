@@ -1,0 +1,31 @@
+<odoo>
+  <!-- ======== Liste des contacts ======== -->
+  <record id="view_partner_list_inherit_age" model="ir.ui.view">
+    <field name="name">res.partner.list.age.inherit</field>
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="base.view_partner_tree"/>
+    <field name="arch" type="xml">
+      <xpath expr="//list" position="inside">
+        <field name="birthdate"/>
+        <field name="age"/>
+      </xpath>
+    </field>
+  </record>
+
+
+
+  <!-- ======== Formulaire contact ======== -->
+  <record id="view_partner_form_inherit_age" model="ir.ui.view">
+    <field name="name">res.partner.form.age.inherit</field>
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="base.view_partner_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//sheet/group" position="inside">
+        <group string="Données personnelles">
+          <field name="birthdate"/>
+          <field name="age" readonly="1"/>
+        </group>
+      </xpath>
+    </field>
+  </record>
+</odoo>
