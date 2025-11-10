@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Main menu -->
+        <menuitem id="menu_bike_shop_root" name="Bike Shop" sequence="10"/>
+        
+        <!-- Products submenu -->
+        <menuitem id="menu_bike_shop_products" name="Catalogue" parent="menu_bike_shop_root" sequence="10"/>
+        <menuitem id="menu_bike_shop_products_list" name="Produits" parent="menu_bike_shop_products" action="action_bike_shop_product" sequence="10"/>
+
+        <!-- Rentals submenu -->
+        <menuitem id="menu_bike_shop_rentals" name="Locations" parent="menu_bike_shop_root" sequence="20"/>
+        <menuitem id="menu_bike_shop_rentals_list" name="Contrats de location" parent="menu_bike_shop_rentals" action="action_bike_shop_rental" sequence="10"/>
+    </data>
+</odoo>

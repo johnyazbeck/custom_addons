@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="bike_listing" name="Liste des vélos">
+            <div class="container mt-4">
+                <h1>Nos Vélos Disponibles</h1>
+                <div class="row">
+                    <t t-foreach="bikes" t-as="bike">
+                        <div class="col-md-4 mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title" t-esc="bike.name"/>
+                                    <p class="card-text">
+                                        Marque: <span t-esc="bike.brand"/><br/>
+                                        Prix: <span t-esc="bike.sale_price"/> €<br/>
+                                        Stock: <span t-esc="bike.quantity"/>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </template>
+    </data>
+</odoo>

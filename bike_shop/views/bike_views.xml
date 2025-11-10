@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Tree view for bike products -->
+        <record id="view_bike_shop_product_tree" model="ir.ui.view">
+            <field name="name">bike.shop.product.tree</field>
+            <field name="model">bike.shop.product</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="product_type"/>
+                    <field name="brand"/>
+                    <field name="model"/>
+                    <field name="sale_price"/>
+                    <field name="quantity"/>
+                    <field name="stock_status" widget="progressbar" options="{'editable': false}"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form view for bike products -->
+        <record id="view_bike_shop_product_form" model="ir.ui.view">
+            <field name="name">bike.shop.product.form</field>
+            <field name="model">bike.shop.product</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_rent" type="object" string="Louer ce vélo" class="btn-primary"
+                                attrs="{'invisible': [('product_type', '!=', 'bike')]}"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group string="Informations générales">
+                                <field name="name"/>
+                                <field name="product_type"/>
+                                <field name="brand"/>
+                                <field name="model"/>
+                                <field name="size"/>
+                                <field name="color"/>
+                                <field name="is_available"/>
+                            </group>
+                            <group string="Prix et stock">
+                                <field name="purchase_price"/>
+                                <field name="sale_price"/>
+                                <field name="quantity"/>
+                                <field name="min_stock"/>
+                                <field name="stock_status" widget="progressbar"/>
+                            </group>
+                        </group>
+                        <group string="Tarifs location" attrs="{'invisible': [('product_type', '!=', 'bike')]}">
+                            <field name="rental_price_hour"/>
+                            <field name="rental_price_day"/>
+                            <field name="rental_price_week"/>
+                        </group>
+                        <group string="Description">
+                            <field name="description" nolabel="1"/>
+                        </group>
+                        <field name="rental_ids">
+                            <tree>
+                                <field name="name"/>
+                                <field name="customer_id"/>
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                                <field name="state"/>
+                                <field name="total_price"/>
+                            </tree>
+                        </field>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Search view for bike products -->
+        <record id="view_bike_shop_product_search" model="ir.ui.view">
+            <field name="name">bike.shop.product.search</field>
+            <field name="model">bike.shop.product</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="brand"/>
+                    <field name="product_type"/>
+                    <filter string="En stock" name="in_stock" domain="[('quantity', '>', 0)]"/>
+                    <filter string="Stock faible" name="low_stock" domain="[('quantity', '<=', min_stock)]"/>
+                    <filter string="Vélos seulement" name="bikes_only" domain="[('product_type', '=', 'bike')]"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action for bike products -->
+        <record id="action_bike_shop_product" model="ir.actions.act_window">
+            <field name="name">Produits</field>
+            <field name="res_model">bike.shop.product</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>

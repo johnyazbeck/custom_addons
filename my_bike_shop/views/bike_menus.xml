@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <!-- Main menu -->
+    <menuitem id="menu_bike_shop_root" name="Bike Shop" sequence="100"/>
+    
+    <!-- Products menu -->
+    <menuitem id="menu_bike_shop_products" name="Produits" parent="menu_bike_shop_root" action="action_bike_shop_product" sequence="10"/>
+
+    <!-- Rentals menu -->
+    <menuitem id="menu_bike_shop_rentals" name="Locations" parent="menu_bike_shop_root" action="action_bike_shop_rental" sequence="20"/>
+  </data>
+</odoo>

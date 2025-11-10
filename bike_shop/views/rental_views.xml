@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Tree view for rentals -->
+        <record id="view_bike_shop_rental_tree" model="ir.ui.view">
+            <field name="name">bike.shop.rental.tree</field>
+            <field name="model">bike.shop.rental</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="bike_id"/>
+                    <field name="customer_id"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="rental_type"/>
+                    <field name="total_price"/>
+                    <field name="state" widget="badge" decoration-success="state=='returned'" decoration-warning="state=='in_progress'" decoration-danger="state=='cancelled'"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form view for rentals -->
+        <record id="view_bike_shop_rental_form" model="ir.ui.view">
+            <field name="name">bike.shop.rental.form</field>
+            <field name="model">bike.shop.rental</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_confirm" type="object" string="Confirmer" states="draft" class="btn-primary"/>
+                        <button name="action_start" type="object" string="Démarrer" states="confirmed" class="btn-primary"/>
+                        <button name="action_return" type="object" string="Retourner" states="in_progress" class="btn-primary"/>
+                        <button name="action_cancel" type="object" string="Annuler" states="draft,confirmed" class="btn-secondary"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,in_progress,returned,cancelled"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group string="Location">
+                                <field name="name"/>
+                                <field name="bike_id" domain="[('product_type', '=', 'bike')]"/>
+                                <field name="customer_id"/>
+                                <field name="rental_type"/>
+                                <field name="unit_price"/>
+                            </group>
+                            <group string="Période">
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                                <field name="rental_duration" readonly="1"/>
+                                <field name="total_price" readonly="1"/>
+                            </group>
+                        </group>
+                        <group string="Notes">
+                            <field name="notes" nolabel="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Search view for rentals -->
+        <record id="view_bike_shop_rental_search" model="ir.ui.view">
+            <field name="name">bike.shop.rental.search</field>
+            <field name="model">bike.shop.rental</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="customer_id"/>
+                    <field name="bike_id"/>
+                    <filter string="En cours" name="in_progress" domain="[('state', '=', 'in_progress')]"/>
+                    <filter string="Confirmées" name="confirmed" domain="[('state', '=', 'confirmed')]"/>
+                    <filter string="Retournées" name="returned" domain="[('state', '=', 'returned')]"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action for rentals -->
+        <record id="action_bike_shop_rental" model="ir.actions.act_window">
+            <field name="name">Locations</field>
+            <field name="res_model">bike.shop.rental</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>
