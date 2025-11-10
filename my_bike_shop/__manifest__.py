@@ -10,7 +10,7 @@
         - Reporting des ventes et locations
     """,
     'author': "Yazbeck John et Jose Bigoro",
-    'website': "https://github.com/johnyazbeck/custom_addons",
+    'website': "https://github.com/johnyazbeck/",
     'category': 'Sales',
     'version': '0.1',
     'depends': ['base', 'sale', 'stock', 'product'],  # Rétablir toutes les dépendances
