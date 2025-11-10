@@ -3,7 +3,7 @@
     'summary': "Module de gestion pour un magasin de vélos",
     'description': "Gestion de vélos et locations",
     'author': "Yazbeck John et Jose Bigoro",
-    'website': "https://github.com/votre-repo/my-bike-shop",
+    'website': "https://github.com/johnyazbeck/custom_addons",
     'category': 'Sales',
     'version': '0.1',
     'depends': ['base'],
