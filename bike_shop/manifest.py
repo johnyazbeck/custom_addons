@@ -13,7 +13,7 @@
         - Suivi des ventes et locations
     """,
     'author': 'Votre Nom',
-    'website': 'https://github.com/votre-repo/bike-shop',
+    'website': 'https://github.com/johnyazbeck/custom_addons',
     'category': 'Sales',
     'depends': ['base', 'sale', 'stock', 'product'],  # Ajout de 'product'
     'data': [
