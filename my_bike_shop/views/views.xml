@@ -19,7 +19,7 @@
       </field>
     </record>
 
-    <!-- Form view for bike products - AMÉLIORÉE -->
+    <!-- Form view for bike products -->
     <record model="ir.ui.view" id="view_bike_shop_product_form">
       <field name="name">bike.shop.product.form</field>
       <field name="model">bike.shop.product</field>
@@ -65,7 +65,7 @@
 
     <!-- ========== RENTAL VIEWS ========== -->
     
-    <!-- List view for rentals - AMÉLIORÉE -->
+    <!-- List view for rentals -->
     <record model="ir.ui.view" id="view_bike_shop_rental_list">
       <field name="name">bike.shop.rental.list</field>
       <field name="model">bike.shop.rental</field>
@@ -83,7 +83,7 @@
       </field>
     </record>
 
-    <!-- Form view for rentals - COMPLÈTE POUR LES LOCATIONS -->
+    <!-- Form view for rentals -->
     <record model="ir.ui.view" id="view_bike_shop_rental_form">
       <field name="name">bike.shop.rental.form</field>
       <field name="model">bike.shop.rental</field>
@@ -101,15 +101,14 @@
                 <field name="rental_type"/>
                 <field name="unit_price"/>
               </group>
-              <group string="Période">
-                <field name="start_date"/>
-                <field name="end_date"/>
+              <group string="Période de location">
+                <field name="start_date" required="1"/>
+                <field name="end_date" required="1"/>
                 <field name="rental_duration" readonly="1"/>
                 <field name="total_price" readonly="1"/>
               </group>
             </group>
-            <group string="État et Notes">
-              <field name="state"/>
+            <group string="Notes">
               <field name="notes" nolabel="1"/>
             </group>
           </sheet>
@@ -123,5 +122,6 @@
       <field name="res_model">bike.shop.rental</field>
       <field name="view_mode">list,form</field>
     </record>
+
   </data>
 </odoo>

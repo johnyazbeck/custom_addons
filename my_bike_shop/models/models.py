@@ -55,7 +55,6 @@ class BikeProduct(models.Model):
         ('out_of_stock', 'Rupture de stock'),
     ], string='Statut du stock', compute='_compute_stock_status', store=True)
 
-
 class BikeRental(models.Model):
     _name = 'bike.shop.rental'
     _description = 'Location de vélo'
@@ -63,8 +62,8 @@ class BikeRental(models.Model):
     _order = 'start_date desc'
 
     name = fields.Char(string='Référence', default='Nouvelle Location', readonly=True)
-    bike_id = fields.Many2one('bike.shop.product', string='Vélo', required=True,
-                              domain="[('product_type', '=', 'bike')]")
+    bike_id = fields.Many2one('bike.shop.product', string='Vélo', required=True, 
+                             domain="[('product_type', '=', 'bike')]")
     customer_id = fields.Many2one('res.partner', string='Client', required=True)
     
     start_date = fields.Datetime(string='Date de début', required=True, default=fields.Datetime.now)
@@ -72,7 +71,7 @@ class BikeRental(models.Model):
     rental_duration = fields.Integer(string='Durée (jours)', compute='_compute_duration', store=True)
     
     rental_type = fields.Selection([
-        ('hour', "À l'heure"),
+        ('hour', 'À l\'heure'),
         ('day', 'À la journée'),
         ('week', 'À la semaine'),
     ], string='Type de location', required=True, default='day')
@@ -106,15 +105,21 @@ class BikeRental(models.Model):
             if record.rental_type == 'hour':
                 record.total_price = record.unit_price * (record.rental_duration * 24)
             elif record.rental_type == 'week':
-                record.total_price = record.unit_price * max(record.rental_duration / 7, 1)
+                record.total_price = record.unit_price * (max(record.rental_duration / 7, 1))
             else:
                 record.total_price = record.unit_price * record.rental_duration
     
     @api.model
-    def create(self, vals):
-        if vals.get('name', 'Nouvelle Location') == 'Nouvelle Location':
-            vals['name'] = self.env['ir.sequence'].next_by_code('bike.shop.rental') or 'Nouvelle Location'
-        return super().create(vals)
+    def create(self, vals_list):
+        # Gère à la fois les créations simples et multiples
+        if isinstance(vals_list, dict):
+            vals_list = [vals_list]
+        
+        for vals in vals_list:
+            if vals.get('name', 'Nouvelle Location') == 'Nouvelle Location':
+                vals['name'] = self.env['ir.sequence'].next_by_code('bike.shop.rental') or 'Nouvelle Location'
+        
+        return super().create(vals_list)
     
     @api.onchange('bike_id', 'rental_type')
     def _onchange_bike_rental_type(self):
