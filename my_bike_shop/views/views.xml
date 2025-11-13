@@ -3,7 +3,7 @@
   <data>
     <!-- ========== BIKE PRODUCT VIEWS ========== -->
     
-    <!-- List view for bike products - ULTRA SIMPLE -->
+    <!-- List view for bike products -->
     <record model="ir.ui.view" id="view_bike_shop_product_list">
       <field name="name">bike.shop.product.list</field>
       <field name="model">bike.shop.product</field>
@@ -14,11 +14,12 @@
           <field name="brand"/>
           <field name="sale_price"/>
           <field name="quantity"/>
+          <field name="stock_status" widget="progressbar"/>
         </list>
       </field>
     </record>
 
-    <!-- Form view for bike products - ULTRA SIMPLE -->
+    <!-- Form view for bike products - AMÉLIORÉE -->
     <record model="ir.ui.view" id="view_bike_shop_product_form">
       <field name="name">bike.shop.product.form</field>
       <field name="model">bike.shop.product</field>
@@ -26,11 +27,29 @@
         <form>
           <sheet>
             <group>
-              <field name="name"/>
-              <field name="product_type"/>
-              <field name="brand"/>
-              <field name="sale_price"/>
-              <field name="quantity"/>
+              <group string="Informations générales">
+                <field name="name"/>
+                <field name="product_type"/>
+                <field name="brand"/>
+                <field name="model"/>
+                <field name="size"/>
+                <field name="color"/>
+              </group>
+              <group string="Prix et stock">
+                <field name="purchase_price"/>
+                <field name="sale_price"/>
+                <field name="quantity"/>
+                <field name="min_stock"/>
+                <field name="stock_status" widget="progressbar"/>
+              </group>
+            </group>
+            <group string="Tarifs location" attrs="{'invisible': [('product_type', '!=', 'bike')]}">
+              <field name="rental_price_hour"/>
+              <field name="rental_price_day"/>
+              <field name="rental_price_week"/>
+            </group>
+            <group string="Description">
+              <field name="description" nolabel="1"/>
             </group>
           </sheet>
         </form>
@@ -46,7 +65,7 @@
 
     <!-- ========== RENTAL VIEWS ========== -->
     
-    <!-- List view for rentals - ULTRA SIMPLE -->
+    <!-- List view for rentals - AMÉLIORÉE -->
     <record model="ir.ui.view" id="view_bike_shop_rental_list">
       <field name="name">bike.shop.rental.list</field>
       <field name="model">bike.shop.rental</field>
@@ -55,23 +74,43 @@
           <field name="name"/>
           <field name="bike_id"/>
           <field name="customer_id"/>
+          <field name="start_date"/>
+          <field name="end_date"/>
+          <field name="rental_type"/>
+          <field name="total_price"/>
           <field name="state"/>
         </list>
       </field>
     </record>
 
-    <!-- Form view for rentals - ULTRA SIMPLE -->
+    <!-- Form view for rentals - COMPLÈTE POUR LES LOCATIONS -->
     <record model="ir.ui.view" id="view_bike_shop_rental_form">
       <field name="name">bike.shop.rental.form</field>
       <field name="model">bike.shop.rental</field>
       <field name="arch" type="xml">
         <form>
+          <header>
+            <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,in_progress,returned,cancelled"/>
+          </header>
           <sheet>
             <group>
-              <field name="name"/>
-              <field name="bike_id"/>
-              <field name="customer_id"/>
+              <group string="Location">
+                <field name="name" readonly="1"/>
+                <field name="bike_id" domain="[('product_type', '=', 'bike')]"/>
+                <field name="customer_id"/>
+                <field name="rental_type"/>
+                <field name="unit_price"/>
+              </group>
+              <group string="Période">
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="rental_duration" readonly="1"/>
+                <field name="total_price" readonly="1"/>
+              </group>
+            </group>
+            <group string="État et Notes">
               <field name="state"/>
+              <field name="notes" nolabel="1"/>
             </group>
           </sheet>
         </form>
