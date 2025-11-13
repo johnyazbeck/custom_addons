@@ -24,7 +24,7 @@ class BikeProduct(models.Model):
     ], string='Taille')
     color = fields.Char(string='Couleur')
     
-    purchase_price = fields.Float(string='Prix d\'achat')
+    purchase_price = fields.Float(string="Prix d'achat")
     sale_price = fields.Float(string='Prix de vente')
     rental_price_hour = fields.Float(string='Prix location/heure')
     rental_price_day = fields.Float(string='Prix location/jour')
@@ -63,8 +63,8 @@ class BikeRental(models.Model):
     _order = 'start_date desc'
 
     name = fields.Char(string='Référence', default='Nouvelle Location', readonly=True)
-    bike_id = fields.Many2one('bike.shop.product', string='Vélo', required=True, 
-                             domain="[('product_type', '=', 'bike')]")
+    bike_id = fields.Many2one('bike.shop.product', string='Vélo', required=True,
+                              domain="[('product_type', '=', 'bike')]")
     customer_id = fields.Many2one('res.partner', string='Client', required=True)
     
     start_date = fields.Datetime(string='Date de début', required=True, default=fields.Datetime.now)
@@ -72,7 +72,7 @@ class BikeRental(models.Model):
     rental_duration = fields.Integer(string='Durée (jours)', compute='_compute_duration', store=True)
     
     rental_type = fields.Selection([
-        ('hour', 'À l\'heure'),
+        ('hour', "À l'heure"),
         ('day', 'À la journée'),
         ('week', 'À la semaine'),
     ], string='Type de location', required=True, default='day')
@@ -92,13 +92,13 @@ class BikeRental(models.Model):
     
     @api.depends('start_date', 'end_date')
     def _compute_duration(self):
-    for record in self:
-        if record.start_date and record.end_date:
-            # En Odoo 19, les Datetime sont déjà des objets datetime
-            duration = (record.end_date - record.start_date).days
-            record.rental_duration = duration if duration > 0 else 1
-        else:
-            record.rental_duration = 0
+        for record in self:
+            if record.start_date and record.end_date:
+                # En Odoo 19, les Datetime sont déjà des objets datetime
+                duration = (record.end_date - record.start_date).days
+                record.rental_duration = duration if duration > 0 else 1
+            else:
+                record.rental_duration = 0
     
     @api.depends('rental_duration', 'unit_price', 'rental_type')
     def _compute_total_price(self):
@@ -106,7 +106,7 @@ class BikeRental(models.Model):
             if record.rental_type == 'hour':
                 record.total_price = record.unit_price * (record.rental_duration * 24)
             elif record.rental_type == 'week':
-                record.total_price = record.unit_price * (max(record.rental_duration / 7, 1))
+                record.total_price = record.unit_price * max(record.rental_duration / 7, 1)
             else:
                 record.total_price = record.unit_price * record.rental_duration
     
