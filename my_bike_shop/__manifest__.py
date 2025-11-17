@@ -6,7 +6,7 @@
     'website': "https://github.com/johnyazbeck/custom_addons",
     'category': 'Sales',
     'version': '0.1',
-    'depends': ['base'],
+    'depends': ['base', 'mail'],
     'data': [
         'security/ir.model.access.csv',
         'data/sequence_data.xml',

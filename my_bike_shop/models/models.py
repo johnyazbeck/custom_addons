@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 class BikeProduct(models.Model):
     _name = 'bike.shop.product'
     _description = 'Produit du magasin de vélos'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
+    #_inherit = ['mail.thread', 'mail.activity.mixin']
 
     name = fields.Char(string='Nom du produit', required=True, tracking=True)
     product_type = fields.Selection([
@@ -58,7 +58,7 @@ class BikeProduct(models.Model):
 class BikeRental(models.Model):
     _name = 'bike.shop.rental'
     _description = 'Location de vélo'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
+    #_inherit = ['mail.thread', 'mail.activity.mixin']
     _order = 'start_date desc'
 
     name = fields.Char(string='Référence', default='Nouvelle Location', readonly=True)
