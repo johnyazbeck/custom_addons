@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
   <data>
-    <!-- ========== BIKE PRODUCT VIEWS ========== -->
+    <!-- ========== MAIN MENU STRUCTURE ========== -->
+    
+    <!-- Main Gestion Menu -->
+    <menuitem id="menu_gestion" name="Gestion" sequence="10"/>
+    
+    <!-- Sub-menus under Gestion -->
+    <menuitem id="menu_vente" name="Vente de vélos et accessoires" parent="menu_gestion" sequence="20"/>
+    <menuitem id="menu_location" name="Location de vélos" parent="menu_gestion" sequence="30"/>
+    <menuitem id="menu_gestion_location" name="Gestion des locations et clients" parent="menu_gestion" sequence="40"/>
+
+    <!-- ========== BIKE PRODUCT VIEWS (VENTE) ========== -->
     
     <!-- List view for bike products -->
     <record model="ir.ui.view" id="view_bike_shop_product_list">
@@ -18,7 +28,7 @@
       </field>
     </record>
 
-    <!-- Form view for bike products - SANS ATTRS -->
+    <!-- Form view for bike products -->
     <record model="ir.ui.view" id="view_bike_shop_product_form">
       <field name="name">bike.shop.product.form</field>
       <field name="model">bike.shop.product</field>
@@ -54,12 +64,15 @@
       </field>
     </record>
 
-    <!-- Action for bike products -->
+    <!-- Action for bike products (Vente) -->
     <record model="ir.actions.act_window" id="action_bike_shop_product">
-      <field name="name">Produits</field>
+      <field name="name">Vélos et Accessoires</field>
       <field name="res_model">bike.shop.product</field>
       <field name="view_mode">list,form</field>
     </record>
+
+    <!-- Menu item for Vente -->
+    <menuitem id="menu_vente_products" name="Produits en vente" parent="menu_vente" action="action_bike_shop_product" sequence="10"/>
 
     <!-- ========== RENTAL VIEWS ========== -->
     
@@ -74,12 +87,13 @@
           <field name="customer_id"/>
           <field name="start_date"/>
           <field name="end_date"/>
+          <field name="rental_type"/>
           <field name="state"/>
         </list>
       </field>
     </record>
 
-    <!-- Form view for rentals - SANS DOMAINE -->
+    <!-- Form view for rentals -->
     <record model="ir.ui.view" id="view_bike_shop_rental_form">
       <field name="name">bike.shop.rental.form</field>
       <field name="model">bike.shop.rental</field>
@@ -87,15 +101,21 @@
         <form>
           <sheet>
             <group>
-              <field name="name"/>
-              <field name="bike_id"/>
-              <field name="customer_id"/>
-              <field name="start_date"/>
-              <field name="end_date"/>
-              <field name="rental_type"/>
-              <field name="unit_price"/>
-              <field name="state"/>
-              <field name="notes"/>
+              <group string="Informations location">
+                <field name="name"/>
+                <field name="bike_id"/>
+                <field name="customer_id"/>
+                <field name="rental_type"/>
+                <field name="state"/>
+              </group>
+              <group string="Période de location">
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="unit_price"/>
+              </group>
+            </group>
+            <group string="Notes">
+              <field name="notes" nolabel="1"/>
             </group>
           </sheet>
         </form>
@@ -108,5 +128,25 @@
       <field name="res_model">bike.shop.rental</field>
       <field name="view_mode">list,form</field>
     </record>
+
+    <!-- Menu items for Location -->
+    <menuitem id="menu_location_management" name="Gestion des locations" parent="menu_location" action="action_bike_shop_rental" sequence="10"/>
+
+    <!-- ========== CUSTOMER VIEWS ========== -->
+    
+    <!-- Assuming you have a customer model, if not you might need to create one -->
+    <!-- Action for customers (you might need to adjust this based on your customer model) -->
+    <record model="ir.actions.act_window" id="action_bike_shop_customer">
+      <field name="name">Clients</field>
+      <field name="res_model">res.partner</field> <!-- or your custom customer model -->
+      <field name="view_mode">list,form</field>
+      <field name="domain">[('customer', '=', True)]</field>
+      <field name="context">{'default_customer': True}</field>
+    </record>
+
+    <!-- Menu item for Gestion des locations et clients -->
+    <menuitem id="menu_gestion_clients" name="Liste des clients" parent="menu_gestion_location" action="action_bike_shop_customer" sequence="10"/>
+    <menuitem id="menu_gestion_locations" name="Toutes les locations" parent="menu_gestion_location" action="action_bike_shop_rental" sequence="20"/>
+
   </data>
 </odoo>
