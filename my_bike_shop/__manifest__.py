@@ -13,6 +13,10 @@
         'views/views.xml',
         'views/bike_menus.xml',
         'views/templates.xml',
+        # RETIREZ demo/demo.xml de la section data
+    ],
+    'demo': [
+        'demo/demo.xml',  # Gardez-le seulement ici
     ],
     'installable': True,
     'application': True,
